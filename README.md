@@ -4,9 +4,9 @@ A sleek and modern Flutter task manager application that helps users organize, p
 
 ## 👨‍💻 Developed by
 
-## Muhammad Awais
+**Muhammad Awais**
 
-
+---
 
 ## 🚀 Features
 
@@ -15,16 +15,15 @@ A sleek and modern Flutter task manager application that helps users organize, p
 - 📅 Calendar view to visualize due tasks
 - 🎨 Beautiful gradient UI with smooth animations
 - 📦 Local data storage using Hive
-- 🧠 Clean architecture (Domain/Data/Presentation layers)
+- 🧠 Clean architecture (Domain / Data / Presentation layers)
 - 🌈 Custom theming using shared app colors and typography (Poppins via Google Fonts)
-- Add Custom widgets for just to show reusability of the code
+- 🧩 Custom widgets to show reusability of the code
 
+---
 
-Local Storage:
+## 💾 Local Storage (Hive)
 
-flutter packages pub run build_runner build
-Used Hive local storage to store the task data like(add,edit, update and delete)
+We use [Hive](https://pub.dev/packages/hive) for local storage. To generate the required TypeAdapters:
 
-
-Run this once to generate adapters:
+```bash
 flutter packages pub run build_runner build
