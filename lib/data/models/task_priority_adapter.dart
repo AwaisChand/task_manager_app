@@ -1,14 +1,9 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-part of 'task.dart';
-
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
+import 'package:hive/hive.dart';
+import '../../domain/entities/task.dart';
 
 class TaskPriorityAdapter extends TypeAdapter<TaskPriority> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
   TaskPriority read(BinaryReader reader) {
@@ -38,14 +33,4 @@ class TaskPriorityAdapter extends TypeAdapter<TaskPriority> {
         break;
     }
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskPriorityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
 }

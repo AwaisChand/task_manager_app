@@ -34,7 +34,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.calendar_month),
+            icon: Icon(Icons.calendar_month, color: AppColors.black),
             onPressed: () {
               Navigator.push(
                 context,
@@ -46,7 +46,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
       ),
       extendBodyBehindAppBar: true,
       body: Container(
-        margin:  EdgeInsets.only(top: 12.h),
+        margin: EdgeInsets.only(top: 12.h),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.secondary, AppColors.primary],
@@ -122,6 +122,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       : ListView.builder(
                         padding: const EdgeInsets.all(16),
                         itemCount: tasks.length,
+                        physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           final task = tasks[index];
                           return TaskCardWidget(

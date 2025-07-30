@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-
-import '../../data/datasources/local_task_data_source.dart';
-import '../../data/models/task_model.dart';
 import '../../domain/entities/task.dart';
-import '../../domain/repositories/task_repository.dart';
-import '../../data/repositories/task_repository_impl.dart';
+import '../../domain/usecases/get_all_tasks.dart';
+import '../../domain/usecases/add_task.dart';
+import '../../domain/usecases/update_task.dart';
+import '../../domain/usecases/delete_task.dart';
 
 class TaskProvider extends ChangeNotifier {
-  final TaskRepository _repo;
+  final GetAllTasks _getAllTasks;
+  final AddTask _addTask;
+  final UpdateTask _updateTask;
+  final DeleteTask _deleteTask;
 
-  TaskProvider(Box<TaskModel> box)
-      : _repo = TaskRepositoryImpl(LocalTaskDataSource(box));
+  TaskProvider({
+    required GetAllTasks getAllTasks,
+    required AddTask addTask,
+    required UpdateTask updateTask,
+    required DeleteTask deleteTask,
+  })  : _getAllTasks = getAllTasks,
+        _addTask = addTask,
+        _updateTask = updateTask,
+        _deleteTask = deleteTask;
 
   List<Task> _allTasks = [];
   List<Task> _filteredTasks = [];
@@ -23,27 +31,25 @@ class TaskProvider extends ChangeNotifier {
   TaskPriority? get filterPriority => _filterPriority;
 
   Future<void> loadTasks() async {
-    _allTasks = await _repo.getAllTasks();
+    _allTasks = await _getAllTasks();
     applyFilters();
   }
 
-  void addTask(Task task) async {
-    await _repo.addTask(task);
+  Future<void> addTask(Task task) async {
+    await _addTask(task);
     _allTasks.add(task);
     applyFilters();
   }
 
-  void updateTask(Task task) async {
-    await _repo.updateTask(task);
+  Future<void> updateTask(Task task) async {
+    await _updateTask(task);
     final index = _allTasks.indexWhere((t) => t.id == task.id);
-    if (index != -1) {
-      _allTasks[index] = task;
-    }
+    if (index != -1) _allTasks[index] = task;
     applyFilters();
   }
 
-  void deleteTask(String id) async {
-    await _repo.deleteTask(id);
+  Future<void> deleteTask(String id) async {
+    await _deleteTask(id);
     _allTasks.removeWhere((t) => t.id == id);
     applyFilters();
   }

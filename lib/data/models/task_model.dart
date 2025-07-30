@@ -3,22 +3,32 @@ import '../../domain/entities/task.dart';
 
 part 'task_model.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
+enum TaskPriorityModel {
+  @HiveField(0)
+  low,
+  @HiveField(1)
+  medium,
+  @HiveField(2)
+  high,
+}
+
+@HiveType(typeId: 2)
 class TaskModel extends HiveObject {
   @HiveField(0)
-  final String id;
+  String id;
 
   @HiveField(1)
-  final String title;
+  String title;
 
   @HiveField(2)
-  final String description;
+  String description;
 
   @HiveField(3)
-  final TaskPriority priority;
+  TaskPriorityModel priority;
 
   @HiveField(4)
-  final DateTime dueDate;
+  DateTime dueDate;
 
   TaskModel({
     required this.id,
@@ -28,19 +38,25 @@ class TaskModel extends HiveObject {
     required this.dueDate,
   });
 
-  Task toEntity() => Task(
-    id: id,
-    title: title,
-    description: description,
-    priority: priority,
-    dueDate: dueDate,
-  );
+  // Convert to Domain Entity
+  Task toEntity() {
+    return Task(
+      id: id,
+      title: title,
+      description: description,
+      priority: TaskPriority.values[priority.index],
+      dueDate: dueDate,
+    );
+  }
 
-  static TaskModel fromEntity(Task task) => TaskModel(
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    priority: task.priority,
-    dueDate: task.dueDate,
-  );
+  // Convert from Domain Entity
+  static TaskModel fromEntity(Task task) {
+    return TaskModel(
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      priority: TaskPriorityModel.values[task.priority.index],
+      dueDate: task.dueDate,
+    );
+  }
 }
